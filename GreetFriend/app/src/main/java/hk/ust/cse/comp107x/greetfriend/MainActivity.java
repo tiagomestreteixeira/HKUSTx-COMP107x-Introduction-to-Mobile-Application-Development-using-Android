@@ -10,8 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.Calendar;
-
+import org.joda.time.DateTime;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
@@ -68,8 +67,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private String selectGreeting(){
-        Calendar cal = Calendar.getInstance();
-        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        DateTime dt = new DateTime();
+        int hour = dt.getHourOfDay();
+        Log.d(TAG, Integer.toString(hour));
         String messageGreeting="";
 
         if(hour>=6 && hour< 12)
