@@ -46,7 +46,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 
     public void testGoodMorningLowerBoundary() {
         cal.set(2016,5,23,6,0,0); //6 am
-
+        
         // Type text and then press the button.
         onView(withId(R.id.editFriendName))
                 .perform(typeText("John"), closeSoftKeyboard());
@@ -70,6 +70,8 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 
     public void testGoodAfternoonLowerBoundary() {
         cal.set(2016,5,23,12,0,0); //12 am
+
+        // Type text and then press the button.
         onView(withId(R.id.editFriendName))
                 .perform(typeText("John"), closeSoftKeyboard());
         onView(withId(R.id.greetButton)).perform(click());
