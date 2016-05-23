@@ -25,7 +25,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Greetings"
+        android:text="greetings"
         android:id="@+id/greetButton"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
