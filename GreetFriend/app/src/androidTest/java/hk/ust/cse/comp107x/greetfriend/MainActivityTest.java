@@ -3,9 +3,8 @@ package hk.ust.cse.comp107x.greetfriend;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
+import org.joda.time.DateTime;
 import org.junit.Before;
-
-import java.util.Calendar;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -19,7 +18,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
     private static final String TAG = "MainActivityTest";
-    private Calendar cal;
+    private DateTime dt;
 
     public MainActivityTest() {
         super(MainActivity.class);
@@ -30,110 +29,53 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     public void setUp() throws Exception {
         super.setUp();
         injectInstrumentation(getInstrumentation());
-        cal = Calendar.getInstance();
         getActivity();
+        dt = new DateTime();
+    }
+
+    void testGreetingHelper(int hour,String greetMessage){
+        dt = dt.hourOfDay().setCopy(hour);
+        Log.d(TAG, Integer.toString(dt.hourOfDay().get()));
+
+        // Type text and then press the button.
+        onView(withId(R.id.editFriendName))
+                .perform(typeText("John"), closeSoftKeyboard());
+        onView(withId(R.id.greetButton)).perform(click());
+        // Check that the text was changed.
+        onView(withId(R.id.textMessage)).check(matches(withText(String.format("%s John!", greetMessage))));
+
     }
 
     public void testGoodMorning() {
-        cal.set(Calendar.HOUR_OF_DAY, 11); //11 am
-        Log.d(TAG, Integer.toString(cal.get(Calendar.HOUR_OF_DAY)));
-
-        // Type text and then press the button.
-        onView(withId(R.id.editFriendName))
-                .perform(typeText("John"), closeSoftKeyboard());
-        onView(withId(R.id.greetButton)).perform(click());
-        // Check that the text was changed.
-        onView(withId(R.id.textMessage)).check(matches(withText("Good Morning John!")));
+        testGreetingHelper(11,"Good Morning");// 11 am
     }
 
     public void testGoodMorningLowerBoundary() {
-        cal.set(Calendar.HOUR_OF_DAY, 6); //6 am
-        Log.d(TAG, Integer.toString(cal.get(Calendar.HOUR_OF_DAY)));
-
-        // Type text and then press the button.
-        onView(withId(R.id.editFriendName))
-                .perform(typeText("John"), closeSoftKeyboard());
-        onView(withId(R.id.greetButton)).perform(click());
-
-        // Check that the text was changed.
-        onView(withId(R.id.textMessage)).check(matches(withText("Good Morning John!")));
+        testGreetingHelper(6,"Good Morning"); // 6 am
     }
 
     public void testGoodAfternoon() {
-        cal.set(Calendar.HOUR_OF_DAY, 14); //2 pm
-        Log.d(TAG, Integer.toString(cal.get(Calendar.HOUR_OF_DAY)));
-
-        // Type text and then press the button.
-        onView(withId(R.id.editFriendName))
-                .perform(typeText("John"), closeSoftKeyboard());
-        onView(withId(R.id.greetButton)).perform(click());
-
-        // Check that the text was changed.
-        onView(withId(R.id.textMessage)).check(matches(withText("Good Afternoon John!")));
+        testGreetingHelper(14,"Good Afternoon"); // 14 pm
     }
 
     public void testGoodAfternoonLowerBoundary() {
-        cal.set(Calendar.HOUR_OF_DAY, 12); //12 am
-        Log.d(TAG, Integer.toString(cal.get(Calendar.HOUR_OF_DAY)));
-
-        onView(withId(R.id.editFriendName))
-                .perform(typeText("John"), closeSoftKeyboard());
-        onView(withId(R.id.greetButton)).perform(click());
-
-        // Check that the text was changed.
-        onView(withId(R.id.textMessage)).check(matches(withText("Good Afternoon John!")));
+        testGreetingHelper(12,"Good Afternoon"); //12 pm
     }
 
     public void testGoodEvening() {
-        cal.set(Calendar.HOUR_OF_DAY, 19); //7 pm
-        Log.d(TAG, Integer.toString(cal.get(Calendar.HOUR_OF_DAY)));
-
-        // Type text and then press the button.
-        onView(withId(R.id.editFriendName))
-                .perform(typeText("John"), closeSoftKeyboard());
-        onView(withId(R.id.greetButton)).perform(click());
-
-        // Check that the text was changed.
-        onView(withId(R.id.textMessage)).check(matches(withText("Good Evening John!")));
+        testGreetingHelper(19,"Good Evening"); //7 pm
     }
 
     public void testGoodEveningLowerBoundary() {
-        cal.set(Calendar.HOUR_OF_DAY, 17); //5 pm
-        Log.d(TAG, Integer.toString(cal.get(Calendar.HOUR_OF_DAY)));
-
-        // Type text and then press the button.
-        onView(withId(R.id.editFriendName))
-                .perform(typeText("John"), closeSoftKeyboard());
-        onView(withId(R.id.greetButton)).perform(click());
-
-        // Check that the text was changed.
-        onView(withId(R.id.textMessage)).check(matches(withText("Good Evening John!")));
+        testGreetingHelper(17,"Good Evening"); //5 pm
     }
 
     public void testGoodNight() {
-        cal.set(Calendar.HOUR_OF_DAY, 12); //2 am
-        Log.d(TAG, Integer.toString(cal.get(Calendar.HOUR_OF_DAY)));
-
-        // Type text and then press the button.
-        onView(withId(R.id.editFriendName))
-                .perform(typeText("John"), closeSoftKeyboard());
-        onView(withId(R.id.greetButton)).perform(click());
-
-        // Check that the text was changed.
-        onView(withId(R.id.textMessage)).check(matches(withText("Good Night John!")));
+        testGreetingHelper(2,"Good Night"); //2 am
     }
 
     public void testGoodNightLowerBoundary() {
-        cal.set(Calendar.HOUR_OF_DAY, 21); //9 pm
-        Log.d(TAG, Integer.toString(cal.get(Calendar.HOUR_OF_DAY)));
-
-        // Type text and then press the button.
-        onView(withId(R.id.editFriendName))
-                .perform(typeText("John"), closeSoftKeyboard());
-        onView(withId(R.id.greetButton)).perform(click());
-
-        // Check that the text was changed.
-        onView(withId(R.id.textMessage)).check(matches(withText("Good Night John!")));
+        testGreetingHelper(21,"Good Night"); //9 pm
     }
 
 }
