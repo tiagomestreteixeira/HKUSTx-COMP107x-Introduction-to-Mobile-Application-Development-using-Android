@@ -18,7 +18,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
     private static final String TAG = "MainActivityTest";
-    private DateTime dt;
+    private MainActivity mActivity;
 
     public MainActivityTest() {
         super(MainActivity.class);
@@ -29,21 +29,17 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     public void setUp() throws Exception {
         super.setUp();
         injectInstrumentation(getInstrumentation());
-        getActivity();
-        dt = new DateTime();
+        mActivity = getActivity();
     }
 
     void testGreetingHelper(int hour,String greetMessage){
-        dt = dt.hourOfDay().setCopy(hour);
-        Log.d(TAG, Integer.toString(dt.hourOfDay().get()));
-
+        mActivity.setHours(hour);
         // Type text and then press the button.
         onView(withId(R.id.editFriendName))
                 .perform(typeText("John"), closeSoftKeyboard());
         onView(withId(R.id.greetButton)).perform(click());
         // Check that the text was changed.
         onView(withId(R.id.textMessage)).check(matches(withText(String.format("%s John!", greetMessage))));
-
     }
 
     public void testGoodMorning() {
