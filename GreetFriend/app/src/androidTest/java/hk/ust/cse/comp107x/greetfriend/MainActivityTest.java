@@ -36,7 +36,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     }
 
     public void testGoodMorning() {
-        cal.set(2016,5,23,11,0,0); //11 am
+        cal.set(Calendar.HOUR_OF_DAY,11); //11 am
         Log.d(TAG,Integer.toString(cal.get(Calendar.HOUR_OF_DAY)));
 
         // Type text and then press the button.
@@ -48,7 +48,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     }
 
     public void testGoodMorningLowerBoundary() {
-        cal.set(2016,5,23,6,0,0); //6 am
+        cal.set(Calendar.HOUR_OF_DAY,6); //6 am
         Log.d(TAG,Integer.toString(cal.get(Calendar.HOUR_OF_DAY)));
 
         // Type text and then press the button.
@@ -61,7 +61,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     }
 
     public void testGoodAfternoon() {
-        cal.set(2016,5,23,14,0,0); //2 pm
+        cal.set(Calendar.HOUR_OF_DAY,14); //2 pm
         Log.d(TAG,Integer.toString(cal.get(Calendar.HOUR_OF_DAY)));
 
         // Type text and then press the button.
@@ -74,7 +74,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     }
 
     public void testGoodAfternoonLowerBoundary() {
-        cal.set(2016,5,23,12,0,0); //12 am
+        cal.set(Calendar.HOUR_OF_DAY,12); //12 am
         Log.d(TAG,Integer.toString(cal.get(Calendar.HOUR_OF_DAY)));
 
         onView(withId(R.id.editFriendName))
@@ -86,7 +86,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     }
 
     public void testGoodEvening() {
-        cal.set(2016,5,23,19,0,0); //7 pm
+        cal.set(Calendar.HOUR_OF_DAY,19); //7 pm
         Log.d(TAG,Integer.toString(cal.get(Calendar.HOUR_OF_DAY)));
 
         // Type text and then press the button.
@@ -98,7 +98,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
         onView(withId(R.id.textMessage)).check(matches(withText("Good Evening John!")));
     }
     public void testGoodEveningLowerBoundary() {
-        cal.set(2016,5,23,17,0,0); //5 pm
+        cal.set(Calendar.HOUR_OF_DAY,17); //5 pm
         Log.d(TAG,Integer.toString(cal.get(Calendar.HOUR_OF_DAY)));
 
         // Type text and then press the button.
@@ -111,7 +111,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     }
 
     public void testGoodNight() {
-        cal.set(2016,5,23,2,0,0); //2 am
+        cal.set(Calendar.HOUR_OF_DAY,12); //2 am
         Log.d(TAG,Integer.toString(cal.get(Calendar.HOUR_OF_DAY)));
 
         // Type text and then press the button.
@@ -124,7 +124,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     }
 
     public void testGoodNightLowerBoundary() {
-        cal.set(2016,5,23,21,0,0); //9 pm
+        cal.set(Calendar.HOUR_OF_DAY,21); //9 pm
         Log.d(TAG,Integer.toString(cal.get(Calendar.HOUR_OF_DAY)));
 
         // Type text and then press the button.
