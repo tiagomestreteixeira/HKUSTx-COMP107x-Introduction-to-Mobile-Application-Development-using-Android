@@ -2,6 +2,7 @@ package hk.ust.cse.comp107x.greetfriend;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,10 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
     Button greetButton;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +58,30 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         switch (view.getId()){
             case R.id.greetButton:
-                textMessage.setText(getString(R.string.greetstring) + friendName + "!");
+                String greetingMessage = selectGreeting();
+                Log.d(TAG, greetingMessage);
+                textMessage.setText(String.format("%s %s!", greetingMessage, friendName));
                 break;
             default:
                 break;
         }
     }
+
+    private String selectGreeting(){
+        Calendar cal = Calendar.getInstance();
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        String messageGreeting="";
+
+        if(hour>=6 && hour< 12)
+            messageGreeting += getString(R.string.greetMorningString);
+        if(hour>=12 && hour< 17)
+            messageGreeting += getString(R.string.greetAfternoonString);
+        if(hour>=17 && hour< 21)
+            messageGreeting +=  getString(R.string.greetEveningString);
+        if(hour>=21 || hour<6)
+            messageGreeting += getString(R.string.greetNightString);
+
+        return messageGreeting;
+    }
+
 }
