@@ -73,13 +73,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
         String messageGreeting="";
 
         if(hour>=6 && hour< 12)
-            messageGreeting = getString(R.string.greetMorningString);
+            messageGreeting += getString(R.string.greetMorningString);
         if(hour>=12 && hour< 17)
-            messageGreeting = getString(R.string.greetAfternoonString);
+            messageGreeting += getString(R.string.greetAfternoonString);
         if(hour>=17 && hour< 21)
-            messageGreeting =  getString(R.string.greetEveningString);
+            messageGreeting +=  getString(R.string.greetEveningString);
         if(hour>=21 || hour<6)
-            messageGreeting =  getString(R.string.greetNightString);
+            messageGreeting += getString(R.string.greetNightString);
 
         return messageGreeting;
     }
