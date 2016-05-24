@@ -3,8 +3,11 @@ package hk.ust.cse.comp107x.greetfriend;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
-import org.joda.time.DateTime;
+import org.joda.time.DateTimeUtils;
 import org.junit.Before;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -14,26 +17,25 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-
 public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
     private static final String TAG = "MainActivityTest";
-    private MainActivity mActivity;
 
     public MainActivityTest() {
         super(MainActivity.class);
     }
 
-
     @Before
     public void setUp() throws Exception {
         super.setUp();
         injectInstrumentation(getInstrumentation());
-        mActivity = getActivity();
+        getActivity();
     }
 
     void testGreetingHelper(int hour,String greetMessage){
-        mActivity.setHours(hour);
+        Log.d(TAG, String.format("Expected in Test: Hour-%s; GreetMessage:%s", Integer.toString(hour), greetMessage));
+        Calendar calendar = new GregorianCalendar(2016, 1, 1, hour, 0, 0); // 2016-01-01 hour:00:00
+        DateTimeUtils.setCurrentMillisFixed(calendar.getTimeInMillis());
         // Type text and then press the button.
         onView(withId(R.id.editFriendName))
                 .perform(typeText("John"), closeSoftKeyboard());
@@ -51,7 +53,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     }
 
     public void testGoodAfternoon() {
-        testGreetingHelper(14,"Good Afternoon"); // 14 pm
+        testGreetingHelper(14,"Good Afternoon"); // 2 pm
     }
 
     public void testGoodAfternoonLowerBoundary() {
