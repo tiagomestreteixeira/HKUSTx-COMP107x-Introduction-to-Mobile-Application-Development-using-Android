@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">GreetFriend</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="greetMorningString">"Good Morning"</string>
+    <string name="greetAfternoonString">"Good Afternoon"</string>
+    <string name="greetEveningString">"Good Evening"</string>
+    <string name="greetNightString">"Good Night"</string>
+</resources>
