@@ -10,14 +10,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.joda.time.DateTime;
+import org.joda.time.DateTimeUtils;
+import java.util.Calendar;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
 
     private static final String TAG = "MainActivity";
     private Button greetButton;
-    DateTime dt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         greetButton = (Button) findViewById(R.id.greetButton);
         greetButton.setOnClickListener(this);
-        dt = new DateTime();
     }
 
     @Override
@@ -70,9 +69,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private String selectGreeting(){
-
-        int hour = dt.getHourOfDay();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(DateTimeUtils.currentTimeMillis());
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
         Log.d(TAG, Integer.toString(hour));
+
         String messageGreeting="";
 
         if(hour>=6 && hour< 12)
@@ -85,10 +86,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
             messageGreeting += getString(R.string.greetNightString);
 
         return messageGreeting;
-    }
-
-    public void setHours(int hour){
-        dt = dt.hourOfDay().setCopy(hour);
     }
 
 }
