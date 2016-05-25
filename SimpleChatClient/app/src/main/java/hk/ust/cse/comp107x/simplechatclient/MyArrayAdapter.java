@@ -9,9 +9,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by muppala on 4/5/15.
- */
 public class MyArrayAdapter extends ArrayAdapter<Message> {
     private final Context context;
     private final ArrayList<Message> messages;
@@ -27,8 +24,17 @@ public class MyArrayAdapter extends ArrayAdapter<Message> {
     // is being drawn.
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        View messageView;
 
-        // TODO
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        messageView = inflater.inflate(R.layout.message,parent,false);
 
+        TextView msgView = (TextView) messageView.findViewById(R.id.messageTextView);
+        msgView.setText(messages.get(position).getMessage());
+
+        TextView timeView = (TextView) messageView.findViewById(R.id.timeTextView);
+        timeView.setText(messages.get(position).getTime());
+
+        return messageView;
     }
 }

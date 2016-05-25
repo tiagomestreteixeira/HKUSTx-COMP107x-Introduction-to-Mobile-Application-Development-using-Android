@@ -32,8 +32,11 @@ public class ChatClient extends Activity implements View.OnClickListener {
         sendButton.setOnClickListener(this);
 
         messageText = (EditText) findViewById(R.id.messageText);
+        messageList = (ListView) findViewById(R.id.messageList);
+        messages = new ArrayList<>();
+        mAdapter = new MyArrayAdapter(this,messages);
 
-        // TODO
+        messageList.setAdapter(mAdapter);
     }
 
     @Override
@@ -68,9 +71,11 @@ public class ChatClient extends Activity implements View.OnClickListener {
 
                 // If the message is not empty string
                 if (!messString.equals("")) {
-
-                    // TODO
-
+                    Message msg = new Message("",messString,true,new Date());
+                    messages.add(msg);
+                    mAdapter.notifyDataSetChanged();
+                    msg = null;
+                    messageText.setText("");
                 }
 
                 break;
