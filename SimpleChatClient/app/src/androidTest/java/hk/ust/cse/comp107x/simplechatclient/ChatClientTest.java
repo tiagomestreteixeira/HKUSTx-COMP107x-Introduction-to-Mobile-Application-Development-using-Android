@@ -61,9 +61,17 @@ public class ChatClientTest extends ActivityInstrumentationTestCase2<ChatClient>
         }
     }
 
+    public void testShoulNotBeNull(){
+        assertNotNull(listAdapter);
+    }
+
     public void testCountListMessages(){
         assertEquals(messages.size(),listAdapter.getCount());
     }
 
+    public void testListMessageContent(){
+        for(int idx = 0; idx<messages.size(); idx++)
+            assertEquals(listAdapter.getItem(idx).getMessage(),messages.get(idx).getMessage());
+    }
 
 }
