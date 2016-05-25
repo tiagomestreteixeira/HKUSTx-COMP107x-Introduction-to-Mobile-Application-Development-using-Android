@@ -1,7 +1,12 @@
 package hk.ust.cse.comp107x.simplechatclient;
 
+import android.support.test.espresso.base.MainThread;
 import android.test.ActivityInstrumentationTestCase2;
 import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
@@ -15,12 +20,16 @@ import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.startsWith;
 import static org.hamcrest.core.IsAnything.anything;
 
-/**
- * Created by muppala on 1/5/15.
- */
 public class ChatClientTest extends ActivityInstrumentationTestCase2<ChatClient> {
 
-    private ChatClient chatClient;
+    private ArrayList<Message> messages;
+    private MyArrayAdapter listAdapter;
+
+    private String[] incoming = {"Hey, How's it going?",
+            "Super! Let's do lunch tomorrow",
+            "How about Mexican?",
+            "Great, I found this new place around the corner",
+            "Ok, see you at 12 then!"};
 
     public ChatClientTest() {
         super(ChatClient.class);
@@ -31,18 +40,38 @@ public class ChatClientTest extends ActivityInstrumentationTestCase2<ChatClient>
     public void setUp() throws Exception {
         super.setUp();
         injectInstrumentation(getInstrumentation());
-        chatClient = getActivity();
+        messages = new ArrayList<>();
+        listAdapter = new MyArrayAdapter(getActivity().getApplicationContext(), messages);
+        generateMessages(5);
     }
 
-    public void testChangeText() {
-        // Type text and then press the button.
-        // Type text and then press the button.
-        onView(withId(R.id.messageText))
-                .perform(typeText("This is a test"), closeSoftKeyboard());
-        onView(withId(R.id.sendButton)).perform(click());
+    public void generateMessages(int numberItems) {
+        String[] incoming = {"Hey, How's it going?",
+                "Super! Let's do lunch tomorrow",
+                "How about Mexican?",
+                "Great, I found this new place around the corner",
+                "Ok, see you at 12 then!"};
 
-        onView(withId(R.id.messageTextView))
-                .check(matches(withText("This is a test")));
+        for(int idx = 0; idx<numberItems;idx++){
+            onView(withId(R.id.messageText)).perform(typeText(Integer.toString(idx)));
+            onView(withId(R.id.sendButton)).perform(click());
+            messages.add(new Message("",Integer.toString(idx),true,new Date()));
+            messages.add(new Message("John",incoming[idx],false,new Date()));
+            listAdapter.notifyDataSetChanged();
+        }
+    }
+
+    public void testShoulNotBeNull(){
+        assertNotNull(listAdapter);
+    }
+
+    public void testCountListMessages(){
+        assertEquals(messages.size(),listAdapter.getCount());
+    }
+
+    public void testListMessageContent(){
+        for(int idx = 0; idx<messages.size(); idx++)
+            assertEquals(listAdapter.getItem(idx).getMessage(),messages.get(idx).getMessage());
     }
 
 }
