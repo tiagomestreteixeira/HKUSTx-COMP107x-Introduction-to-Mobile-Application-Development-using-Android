@@ -7,4 +7,11 @@
     <string name="greetAfternoonString">"Good Afternoon"</string>
     <string name="greetEveningString">"Good Evening"</string>
     <string name="greetNightString">"Good Night"</string>
+    <string name="title_activity_show_message">ShowMessage</string>
+    <string-array name="friends">
+        <item>John</item>
+        <item>Paul</item>
+        <item>George</item>
+        <item>Ringo</item>
+    </string-array>
 </resources>

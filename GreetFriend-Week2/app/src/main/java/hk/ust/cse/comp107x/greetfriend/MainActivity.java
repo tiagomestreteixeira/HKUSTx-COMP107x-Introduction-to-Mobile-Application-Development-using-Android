@@ -1,30 +1,29 @@
 package hk.ust.cse.comp107x.greetfriend;
 
-import android.app.Activity;
+import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import org.joda.time.DateTimeUtils;
+
 import java.util.Calendar;
 
-public class MainActivity extends Activity implements View.OnClickListener {
-
+public class MainActivity extends ListActivity {
 
     private static final String TAG = "MainActivity";
-    private Button greetButton;
+    private String[] names;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        greetButton = (Button) findViewById(R.id.greetButton);
-        greetButton.setOnClickListener(this);
+        names = getResources().getStringArray(R.array.friends);
+        setListAdapter(new ArrayAdapter<>(this,R.layout.friend_item,names));
     }
 
     @Override
@@ -50,22 +49,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View view) {
-        TextView textMessage = (TextView) findViewById(R.id.textMessage);
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        String greetingMessage = selectGreeting();
+        Log.d(TAG, greetingMessage);
 
-        EditText editFriendName = (EditText) findViewById(R.id.editFriendName);
-
-        String friendName = editFriendName.getText().toString();
-
-        switch (view.getId()){
-            case R.id.greetButton:
-                String greetingMessage = selectGreeting();
-                Log.d(TAG, greetingMessage);
-                textMessage.setText(String.format("%s %s!", greetingMessage, friendName));
-                break;
-            default:
-                break;
-        }
+        Intent in = new Intent(this, ShowMessage.class);
+        in.putExtra("message", String.format("%s %s!", greetingMessage, names[(int) id]));
+        startActivity(in);
     }
 
     private String selectGreeting(){
