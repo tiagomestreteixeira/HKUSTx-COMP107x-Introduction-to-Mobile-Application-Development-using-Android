@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -17,11 +15,12 @@ import java.util.Date;
 
 public class ChatClient extends Activity implements View.OnClickListener {
 
-    Button sendButton;
-    EditText messageText;
-    ListView messageList;
-    MyArrayAdapter mAdapter = null;
-    ArrayList<Message> messages = null;
+    private Button sendButton;
+    private EditText messageText;
+    private ListView messageList;
+    private MyArrayAdapter mAdapter = null;
+    private ArrayList<Message> messages = null;
+    private int in_index = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +32,9 @@ public class ChatClient extends Activity implements View.OnClickListener {
 
         messageText = (EditText) findViewById(R.id.messageText);
         messageList = (ListView) findViewById(R.id.messageList);
+        // messages = new ArrayList<String>();
         messages = new ArrayList<>();
+        // mAdapter = new ArrayAdapter<String>(this, R.layout.mymessage, R.id.mymessageTextView, messages);
         mAdapter = new MyArrayAdapter(this,messages);
 
         messageList.setAdapter(mAdapter);
@@ -74,14 +75,28 @@ public class ChatClient extends Activity implements View.OnClickListener {
                     Message msg = new Message("",messString,true,new Date());
                     messages.add(msg);
                     mAdapter.notifyDataSetChanged();
-                    msg = null;
+                    sendMessage();
                     messageText.setText("");
                 }
-
                 break;
-
             default:
                 break;
+        }
+    }
+
+    public void sendMessage() {
+
+        String[] incoming = {"Hey, How's it going?",
+                "Super! Let's do lunch tomorrow",
+                "How about Mexican?",
+                "Great, I found this new place around the corner",
+                "Ok, see you at 12 then!"};
+
+        if (in_index < incoming.length) {
+            Message message = new Message("John", incoming[in_index], false,  new Date());
+            messages.add(message);
+            in_index++;
+            mAdapter.notifyDataSetChanged();
         }
     }
 }
