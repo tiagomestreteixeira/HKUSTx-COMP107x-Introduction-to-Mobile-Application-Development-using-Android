@@ -32,9 +32,7 @@ public class ChatClient extends Activity implements View.OnClickListener {
 
         messageText = (EditText) findViewById(R.id.messageText);
         messageList = (ListView) findViewById(R.id.messageList);
-        // messages = new ArrayList<String>();
         messages = new ArrayList<>();
-        // mAdapter = new ArrayAdapter<String>(this, R.layout.mymessage, R.id.mymessageTextView, messages);
         mAdapter = new MyArrayAdapter(this,messages);
 
         messageList.setAdapter(mAdapter);

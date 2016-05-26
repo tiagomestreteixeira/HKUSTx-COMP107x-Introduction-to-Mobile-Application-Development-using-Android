@@ -27,12 +27,23 @@ public class MyArrayAdapter extends ArrayAdapter<Message> {
         View messageView;
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        messageView = inflater.inflate(R.layout.message,parent,false);
+        int messageLayoutToInvoke, messageTextView, timeTextView;
 
-        TextView msgView = (TextView) messageView.findViewById(R.id.messageTextView);
+        if (messages.get(position).fromMe()) {
+            messageLayoutToInvoke = R.layout.message;
+            messageTextView = R.id.messageTextView;
+            timeTextView = R.id.timeTextView;
+        } else {
+            messageLayoutToInvoke = R.layout.mymessage;
+            messageTextView = R.id.mymessageTextView;
+            timeTextView = R.id.mytimeTextView;
+        }
+
+        messageView = inflater.inflate(messageLayoutToInvoke, parent, false);
+        TextView msgView = (TextView) messageView.findViewById(messageTextView);
         msgView.setText(messages.get(position).getMessage());
 
-        TextView timeView = (TextView) messageView.findViewById(R.id.timeTextView);
+        TextView timeView = (TextView) messageView.findViewById(timeTextView);
         timeView.setText(messages.get(position).getTime());
 
         return messageView;
