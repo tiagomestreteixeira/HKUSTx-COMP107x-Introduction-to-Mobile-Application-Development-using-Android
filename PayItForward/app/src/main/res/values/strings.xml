@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PayItForwardCalculator</string>
+    <string name="action_settings">Settings</string>
+    <string name="hintActionsPerLevel">Enter number of good actions per person</string>
+    <string name="number_of_good_actions_per_person">Number of Good actions Per Person</string>
+    <string name="depth">Depth</string>
+    <string name="buttonTextCalculateMaxActions">Calculate Max possible good Actions</string>
+</resources>
