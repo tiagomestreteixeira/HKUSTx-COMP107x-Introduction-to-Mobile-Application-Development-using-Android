@@ -13,16 +13,16 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final Context context;
     private final ArrayList<Message> messages;
 
-    private static final int VIEW_HOLDER_TYPE_1=1;
-    private static final int VIEW_HOLDER_TYPE_2=2;
+    private static final int VIEW_HOLDER_OUTGOING_MSG =1;
+    private static final int VIEW_HOLDER_INCOMING_MSG=2;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class ViewHolder_Type1 extends RecyclerView.ViewHolder {
+    public static class ViewHolder_OutGoing extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView mymessageTextView, mytimeTextView;
-        public ViewHolder_Type1(View v) {
+        public ViewHolder_OutGoing(View v) {
             super(v);
             this.mymessageTextView = (TextView) v.findViewById(R.id.mymessageTextView);
             this.mytimeTextView = (TextView) v.findViewById(R.id.mytimeTextView);
@@ -57,13 +57,12 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         switch (viewType) {
             // create a new view
-
-            case VIEW_HOLDER_TYPE_1:
+            case VIEW_HOLDER_OUTGOING_MSG:
                 v = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.mymessage, parent, false);
-                return new ViewHolder_Type1(v);
+                return new ViewHolder_OutGoing(v);
 
-            case VIEW_HOLDER_TYPE_2:
+            case VIEW_HOLDER_INCOMING_MSG:
                 v = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.message, parent, false);
                 return new ViewHolder_Type2(v);
@@ -82,15 +81,15 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         // - replace the contents of the view with that element
         switch (getItemViewType(position)) {
 
-            case VIEW_HOLDER_TYPE_1:
-                ViewHolder_Type1 viewholder1 = (ViewHolder_Type1) holder;
+            case VIEW_HOLDER_OUTGOING_MSG:
+                ViewHolder_OutGoing viewholder1 = (ViewHolder_OutGoing) holder;
                 TextView mytimeView = (TextView) viewholder1.mytimeTextView;
                 mytimeView.setText(messages.get(position).getTime());
                 TextView mymsgView = (TextView) viewholder1.mymessageTextView;
                 mymsgView.setText(messages.get(position).getMessage());
                 break;
 
-            case VIEW_HOLDER_TYPE_2:
+            case VIEW_HOLDER_INCOMING_MSG:
                 ViewHolder_Type2 viewholder2 = (ViewHolder_Type2) holder;
                 TextView timeView = (TextView) viewholder2.timeTextView;
                 timeView.setText(messages.get(position).getTime());
@@ -111,9 +110,9 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         // Just as an example, return 1 or 2 depending on position
         // Note that unlike in ListView adapters, types don't have to be contiguous
         if (messages.get(position).fromMe())
-            return VIEW_HOLDER_TYPE_1;
+            return VIEW_HOLDER_OUTGOING_MSG;
         else
-            return VIEW_HOLDER_TYPE_2;
+            return VIEW_HOLDER_INCOMING_MSG;
     }
 
     // Return the size of your dataset (invoked by the layout manager)
