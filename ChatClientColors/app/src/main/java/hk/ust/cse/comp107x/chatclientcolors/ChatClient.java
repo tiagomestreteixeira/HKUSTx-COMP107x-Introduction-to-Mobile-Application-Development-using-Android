@@ -40,18 +40,22 @@ public class ChatClient extends AppCompatActivity implements View.OnClickListene
 
         messageText = (EditText) findViewById(R.id.messageText);
 
-        // messages = new ArrayList<String>();
         messages = new ArrayList<Message>();
 
-        // mAdapter = new ArrayAdapter<String>(this, R.layout.mymessage, R.id.mymessageTextView, messages);
         mAdapter = new MyAdapter(this, messages);
 
+        messageList = (RecyclerView) findViewById(R.id.messageList);
+        messageList.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        messageList.setLayoutManager(llm);
+        messageList.setAdapter(mAdapter);
 
-        // TODO RECYCLER VIEW
-
-
-        //TODO TOOLBAR
-
+        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+        Intent in = getIntent();
+        String friend = in.getStringExtra(getString(R.string.friend));
+        getSupportActionBar().setTitle(friend);
     }
 
     @Override
@@ -89,7 +93,6 @@ public class ChatClient extends AppCompatActivity implements View.OnClickListene
                     messageList.scrollToPosition(messages.size() - 1);
                     mAdapter.notifyDataSetChanged();
                     sendMessage();
-                    message = null;
                     messageText.setText("");
 
                 }
