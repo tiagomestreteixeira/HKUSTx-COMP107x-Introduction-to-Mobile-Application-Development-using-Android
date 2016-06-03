@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -56,6 +57,7 @@ public class ChatClient extends AppCompatActivity implements View.OnClickListene
         Intent in = getIntent();
         String friend = in.getStringExtra(getString(R.string.friend));
         getSupportActionBar().setTitle(friend);
+
     }
 
     @Override
